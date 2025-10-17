@@ -6,59 +6,64 @@ const expandedContent = document.querySelector('.expanded-content');
 
 // --- Functions ---
 
-function openExpandedView(contentId) {
-    // 1. Find the correct template
+// Main function to load content into the expanded view
+function loadContent(contentId) {
     const template = document.querySelector(`#${contentId}-content`);
-    
-    // 2. If a template doesn't exist, do nothing
     if (!template) {
         console.error(`Content template for "${contentId}" not found.`);
         return;
     }
-
-    // 3. Clone its content and put it into our expanded view
     const content = template.content.cloneNode(true);
     expandedContent.innerHTML = ''; // Clear previous content
     expandedContent.appendChild(content);
+}
 
-    // 4. Add the magic class to the body to trigger the CSS animations
+// Function to open the main expanded view (e.g., from the hero screen)
+function openExpandedView(contentId) {
+    loadContent(contentId);
     body.classList.add('view-expanded');
 }
 
+// Function to close the expanded view completely
 function closeExpandedView() {
-    // Remove the class from the body to reverse the animations
     body.classList.remove('view-expanded');
 }
 
+
 // --- Event Listeners ---
 
-// Listen for clicks on ANY of the navigation buttons
+// Listen for clicks on the main navigation buttons (Projects, About, Blog)
 navButtons.forEach(button => {
     button.addEventListener('click', () => {
-        const contentId = button.dataset.content; // Get the ID from the data-content attribute
+        const contentId = button.dataset.content;
         openExpandedView(contentId);
     });
 });
 
-// Listen for a click on the close button
+// Listen for a click on the main close button
 closeBtn.addEventListener('click', closeExpandedView);
 
-.social-links {
-    margin-top: 30px; /* Space above the links */
-    display: flex;
-    gap: 30px; /* Space between the links */
-    opacity: 0.8; /* Make them slightly less prominent than the main nav */
-}
 
-.social-links a {
-    color: #f0f0f0;
-    text-decoration: none;
-    font-weight: bold;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-}
+// ================================================= */
+// NEW: Event Delegation for dynamic content         */
+// This is the key to making the new buttons work    */
+// ================================================= */
 
-.social-links a:hover {
-    color: #8a63d2; /* A nice highlight color on hover */
-    transform: scale(1.1);
-}
+// We listen for ALL clicks inside the expanded content area
+expandedContent.addEventListener('click', (event) => {
+    
+    // Check if the clicked item (or its parent) is a "Read More" button
+    const readMoreBtn = event.target.closest('.btn-read-more');
+    if (readMoreBtn) {
+        event.preventDefault(); // Stop the link from trying to navigate
+        const postId = 'nlp-surveillance-post'; // The ID of the full post template
+        loadContent(postId); // Load the full post content
+    }
+
+    // Check if the clicked item is a "Back" button
+    const backBtn = event.target.closest('.btn-back');
+    if (backBtn) {
+        event.preventDefault(); // Stop the link from navigating
+        loadContent('blog'); // Reload the main blog summary view
+    }
+});

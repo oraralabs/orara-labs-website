@@ -1,16 +1,16 @@
 /* --- Google Font Import --- */
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
-/* --- Dark Mode Theme --- */
+/* --- Dark Mode Theme & Global Styles --- */
 body {
     font-family: 'Montserrat', sans-serif;
     margin: 0;
     color: #f0f0f0;
     background-color: #0E0023;
-    overflow: hidden; /* Prevents scrollbars from appearing during animations */
+    overflow: hidden; /* Prevents scrollbars during animations */
 }
 
-/* --- Hero View Styles --- */
+/* --- Hero View (Default State) --- */
 .hero-view {
     display: flex;
     flex-direction: column;
@@ -19,6 +19,37 @@ body {
     height: 100vh;
     text-align: center;
     transition: opacity 0.5s ease, transform 0.7s ease;
+}
+
+/* --- Animated Logo with Subtle Pulse --- */
+@keyframes subtle-pulse {
+    0% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 15px rgba(138, 99, 210, 0.4));
+    }
+    50% {
+        transform: scale(1.02);
+        filter: drop-shadow(0 0 25px rgba(138, 99, 210, 0.6));
+    }
+    100% {
+        transform: scale(1);
+        filter: drop-shadow(0 0 15px rgba(138, 99, 210, 0.4));
+    }
+}
+
+.main-logo {
+    width: 450px;
+    margin-bottom: 20px;
+    transition: width 0.7s ease;
+    animation: subtle-pulse 5s ease-in-out infinite;
+}
+
+.logo-title {
+    font-size: 3rem;
+    margin: 0 0 30px 0;
+    letter-spacing: 2px;
+    text-transform: lowercase;
+    color: #f0f0f0;
 }
 
 /* --- Radiating Hover Effect on Buttons --- */
@@ -35,12 +66,14 @@ body {
     cursor: pointer;
     font-size: 1rem;
     font-family: 'Montserrat', sans-serif;
-    transition: color 0.3s ease, background-color 0.3s ease;
+    transition: color 0.4s ease, background-color 0.4s ease;
 }
+
 .main-nav button span {
     position: relative;
     z-index: 2;
 }
+
 .main-nav button::before {
     content: '';
     position: absolute;
@@ -48,69 +81,66 @@ body {
     left: 50%;
     width: 0;
     height: 0;
-    background: radial-gradient(circle, rgba(240, 240, 240, 0.5) 0%, rgba(240, 240, 240, 0) 70%);
+    background-color: #f0f0f0;
     border-radius: 50%;
     transform: translate(-50%, -50%);
-    transition: width 0.6s ease, height 0.6s ease;
+    transition: width 0.4s ease, height 0.4s ease;
     z-index: 1;
 }
+
 .main-nav button:hover::before {
-    width: 300px;
-    height: 300px;
+    width: 250px;
+    height: 250px;
 }
+
 .main-nav button:hover {
-    background-color: #f0f0f0;
     color: #0E0023;
 }
 
-/* --- Animated Logo --- */
-@keyframes subtle-pulse {
-    0% {
-        transform: scale(1);
-        filter: drop-shadow(0 0 15px rgba(138, 99, 210, 0.4));
-    }
-    50% {
-        transform: scale(1.02); /* A very slight size increase */
-        filter: drop-shadow(0 0 25px rgba(138, 99, 210, 0.6)); /* A more intense glow */
-    }
-    100% {
-        transform: scale(1);
-        filter: drop-shadow(0 0 15px rgba(138, 99, 210, 0.4));
-    }
+/* --- Social Icon Links --- */
+.social-links {
+    margin-top: 40px;
+    display: flex;
+    gap: 30px;
 }
 
-/* Style for the logo image itself */
-.main-logo {
-    width: 500px;
-    margin-bottom: 20px;
-    transition: width 0.7s ease; /* Ensure it still shrinks nicely */
-    
-    /* Apply the new, subtle animation */
-    animation: subtle-pulse 5s ease-in-out infinite; /* A longer 5s duration feels more premium */
+.social-links a {
+    display: inline-block;
+    transition: transform 0.3s ease;
 }
 
-.logo-title {
-    font-size: 3rem; margin: 0 0 30px 0; letter-spacing: 2px;
-    text-transform: lowercase; color: #f0f0f0;
+.social-links svg {
+    width: 24px;
+    height: 24px;
+    stroke: #f0f0f0;
+    stroke-width: 2;
+    fill: none;
+    transition: stroke 0.3s ease;
 }
 
-/* Tweak for shrinking the logo image when expanded */
-body.view-expanded .main-logo {
-    width: 90px;
+.social-links a:hover {
+    transform: scale(1.15);
+}
+
+.social-links a:hover svg {
+    stroke: #ffffff;
 }
 
 
-/* --- Layout Transformation Logic --- */
+/* --- Layout Transformation on Click --- */
 body.view-expanded .hero-view {
     opacity: 0;
     transform: translateY(-20px);
-    pointer-events: none;
+    pointer-events: none; /* Prevents clicking invisible elements */
 }
 
 /* --- The Expanded Content Platform --- */
 .expanded-view {
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     padding-top: 60px;
     padding-bottom: 40px;
     opacity: 0;
@@ -118,76 +148,209 @@ body.view-expanded .hero-view {
     visibility: hidden;
     transition: opacity 0.7s ease 0.2s, transform 0.7s ease 0.2s;
 }
+
 body.view-expanded .expanded-view {
     opacity: 1;
     transform: translateY(0);
     visibility: visible;
 }
+
 .expanded-content {
     max-width: 800px;
     margin: 0 auto;
     height: 100%;
-    overflow-y: auto;
+    overflow-y: auto; /* Allow scrolling ONLY on the content */
     padding: 20px;
 }
-.close-btn {
-    position: fixed; top: 20px; right: 20px;
-    font-size: 35px; font-weight: bold; border: none;
-    background: none; cursor: pointer; color: #f0f0f0;
-    opacity: 0; visibility: hidden; transition: opacity 0.3s ease;
-}
-body.view-expanded .close-btn { opacity: 1; visibility: visible; }
 
-/* --- Dark Mode Project Card & Content Styles --- */
-.expanded-content h2 { font-size: 2.5rem; }
-.expanded-content p { font-size: 1.1rem; line-height: 1.6; }
-.project-card {
+.close-btn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    font-size: 35px;
+    font-weight: bold;
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: #f0f0f0;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease;
+}
+
+body.view-expanded .close-btn {
+    opacity: 1;
+    visibility: visible;
+}
+
+
+/* --- Content Card Styles (Projects, Blog, etc.) --- */
+.expanded-content h2 {
+    font-size: 2.5rem;
+}
+
+.expanded-content p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+}
+
+.project-card, .blog-post-card {
     background-color: #1c0d38;
     border: 1px solid #3a2c5a;
-    border-radius: 8px; padding: 30px; text-align: left;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: left;
     margin-top: 20px;
-    box-shadow: 0 10px 30px -10px rgba(0,0,0,0.2);
-}
-.project-card h3 { margin-top: 0; color: #f0f0f0; }
-.tech-stack { list-style: disc; padding-left: 20px; margin: 20px 0; color: #c5b9e0; }
-.tech-stack li { margin-bottom: 5px; }
-.project-links { margin-top: 20px; }
-.btn { display: inline-block; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; transition: all 0.3s ease; margin-right: 10px; }
-.btn-primary { background-color: #8a63d2; color: #ffffff; }
-.btn-primary:hover { background-color: #a081dd; }
-.btn-secondary { background-color: transparent; color: #f0f0f0; border: 1px solid #f0f0f0; }
-.btn-secondary:hover { background-color: #f0f0f0; color: #0E0023; }
-.contact-link { color: #8a63d2; font-weight: bold; text-decoration: none; }
-
-.social-links {
-    margin-top: 40px; /* CHANGED: Increased the gap from 30px to 40px */
-    display: flex;
-    gap: 30px;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.2);
 }
 
-/* Style the link (the invisible container) */
-.social-links a {
+.blog-post-card {
+    margin-top: 30px;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.blog-post-card:hover {
+    transform: translateY(-5px);
+    border-color: #8a63d2;
+}
+
+.post-date {
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: #a081dd;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-top: 0;
+}
+
+.project-card h3, .blog-post-card h3 {
+    margin-top: 0;
+    color: #f0f0f0;
+}
+
+.tech-stack {
+    list-style: disc;
+    padding-left: 20px;
+    margin: 20px 0;
+    color: #c5b9e0;
+}
+
+.tech-stack li {
+    margin-bottom: 5px;
+}
+
+.project-links {
+    margin-top: 20px;
+}
+
+.btn {
     display: inline-block;
+    padding: 10px 20px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+}
+
+.btn-primary {
+    background-color: #8a63d2;
+    color: #ffffff;
+}
+.btn-primary:hover {
+    background-color: #a081dd;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: #f0f0f0;
+    border: 1px solid #f0f0f0;
+}
+.btn-secondary:hover {
+    background-color: #f0f0f0;
+    color: #0E0023;
+}
+
+.post-excerpt {
+    color: #c5b9e0;
+    line-height: 1.6;
+}
+
+.btn-read-more {
+    display: inline-block;
+    margin-top: 20px;
+    color: #f0f0f0;
+    font-weight: bold;
+    text-decoration: none;
     transition: transform 0.3s ease;
 }
 
-/* Style the SVG icon itself */
-.social-links svg {
-    width: 24px;
-    height: 24px;
-    stroke: #f0f0f0; /* The default color of the icon lines */
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    fill: none;
-    transition: stroke 0.3s ease;
+
+
+
+.full-post-content {
+    text-align: left;
 }
 
-/* The hover effect */
-.social-links a:hover {
-    transform: scale(1.15);
+.full-post-content h1 {
+    font-size: 2.8rem;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    color: #ffffff; /* Brighter white for the main title */
 }
 
-.social-links a:hover svg {
-    stroke: #ffffff; /* CHANGED: Hover color is now brighter white */
+.post-meta {
+    font-size: 0.9rem;
+    color: #c5b9e0; /* Subdued purple for metadata */
+    margin-bottom: 40px;
+    border-bottom: 1px solid #3a2c5a; /* A subtle separator line */
+    padding-bottom: 20px;
+}
+
+.full-post-content h2 {
+    font-size: 1.8rem;
+    color: #f0f0f0;
+    margin-top: 40px;
+    margin-bottom: 15px;
+    border-left: 4px solid #8a63d2; /* Highlight bar for section titles */
+    padding-left: 15px;
+}
+
+.full-post-content p {
+    font-size: 1.1rem;
+    line-height: 1.7; /* A bit more spacing for readability */
+    color: #c5b9e0; /* Softer white for body text */
+}
+
+.full-post-content ul {
+    list-style: disc;
+    padding-left: 30px;
+    line-height: 1.8;
+}
+
+.full-post-content li {
+    margin-bottom: 10px;
+}
+
+.full-post-content blockquote {
+    margin: 30px 0;
+    padding: 20px;
+    background-color: #1c0d38; /* Matches the card background */
+    border-left: 5px solid #a081dd; /* A stronger highlight for quotes */
+    font-style: italic;
+    font-size: 1.2rem;
+    color: #ffffff;
+}
+
+.btn-back {
+    display: inline-block;
+    color: #a081dd;
+    text-decoration: none;
+    font-weight: bold;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.btn-back:hover {
+    transform: translateX(-5px); /* Slide the arrow back on hover */
 }
