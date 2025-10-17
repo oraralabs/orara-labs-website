@@ -4,64 +4,64 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Orara Labs | Amr's Data Science Portfolio</title>
-    <link rel="stylesheet" href="style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <!-- This is the main view that is always visible -->
-    <main class="hero-view">
-        <img src="Group 1-2.png" alt="Orara Labs Logo" class="main-logo">
-        <h1 class="logo-title">ORARA LABS</h1>
+    <!-- This is the main "Home" screen -->
+    <header class="hero-view">
+        <img src="Group 1-2.png" alt="Orara Labs Logo" class="main-logo">```
+        <h1 class="logo-title">orara labs</h1>
         <nav class="main-nav">
-            <button id="projects-btn">PROJECTS</button>
-            <button id="about-btn">ABOUT</button>
-            <button id="contact-btn">CONTACT</button>
+            <button data-content="projects"><span>PROJECTS</span></button>
+            <button data-content="about"><span>ABOUT</span></button>
+            <button data-content="contact"><span>CONTACT</span></button>
         </nav>
+    </header>
+
+    <!-- This is the hidden "Expanded" screen -->
+    <main id="expanded-view" class="expanded-view">
+        <div class="expanded-content">
+            <!-- Content for different sections will be injected here by JavaScript -->
+        </div>
+        <button class="close-btn">&times;</button>
     </main>
 
-    <!-- ============================================= -->
-    <!-- MODALS (HIDDEN BY DEFAULT)                    -->
-    <!-- ============================================= -->
-
-    <!-- The Projects Modal -->
-    <div id="projects-modal" class="modal hidden">
-        <div class="modal-content">
-            <button class="close-btn">&times;</button>
-            <h2>Projects</h2>
-            <p>Here is a showcase of my work. Click on a project for more details.</p>
-            <div class="project-card">
-                <h3>Sydney Toll Calculator MVP</h3>
-                <p>A web application that helps users compare the time and cost of toll vs. toll-free routes in Sydney, built using the Google Maps API.</p>
-                
-                <ul class="tech-stack">
-                    <li>HTML</li>
-                    <li>CSS</li>
-                    <li>JavaScript</li>
-                    <li>Google Maps API</li>
-                </ul>
-
-                <div class="project-links">
-                    <a href="#" class="btn btn-primary">View Project</a>
-                    <a href="#" class="btn btn-secondary">View Code</a>
-                </div>
+    <!-- Templates for the content that will go inside the expanded view -->
+    <template id="projects-content">
+        <h2>Projects</h2>
+        <div class="project-card">
+            <h3>Sydney Toll Calculator MVP</h3>
+            <p>A web application that helps users compare the time and cost of toll vs. toll-free routes in Sydney, built using the Google Maps API.</p>
+            <ul class="tech-stack">
+                <li>HTML</li>
+                <li>CSS</li>
+                <li>JavaScript</li>
+                <li>Google Maps API</li>
+            </ul>
+            <div class="project-links">
+                <a href="#" class="btn btn-primary">View Project</a>
+                <a href="#" class="btn btn-secondary">View Code</a>
             </div>
         </div>
-    </div>
+    </template>
 
-    <!-- The About Modal -->
-    <div id="about-modal" class="modal hidden">
-        <div class="modal-content">
-            <button class="close-btn">&times;</button>
-            <h2>About Me</h2>
-            <p>Hello! I'm Amr, a data science student at university...</p>
-        </div>
-    </div>
+    <template id="about-content">
+        <h2>About Me</h2>
+        <p>Hello! I'm Amr, a data science student at university with a passion for turning complex data into tangible, real-world solutions. I thrive on building clean, professional projects that solve practical problems.</p>
+        <p>My goal with Orara Labs is to create a portfolio of data-driven applications that showcase my skills in machine learning, API integration, and web development.</p>
+    </template>
 
-    <!-- We'll add our JavaScript file at the end of the body -->
+    <!-- We will add a template for the Contact section later -->
+    <template id="contact-content">
+        <h2>Contact</h2>
+        <p>The best way to reach me is via email or LinkedIn. I'm always open to discussing new projects, creative ideas, or opportunities to be part of an ambitious team.</p>
+        <p><a href="mailto:YOUR_EMAIL_HERE" class="contact-link">your_email_here@example.com</a></p>
+    </template>
+
     <script src="script.js"></script>
 </body>
 </html>

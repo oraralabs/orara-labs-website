@@ -1,43 +1,44 @@
-// --- Selecting the HTML elements ---
-const projectsModal = document.querySelector('#projects-modal');
-const projectsBtn = document.querySelector('#projects-btn');
-const aboutModal = document.querySelector('#about-modal');
-const aboutBtn = document.querySelector('#about-btn');
-const closeButtons = document.querySelectorAll('.close-btn');
+// --- Select all the key elements ---
+const body = document.querySelector('body');
+const navButtons = document.querySelectorAll('.main-nav button');
+const closeBtn = document.querySelector('.close-btn');
+const expandedContent = document.querySelector('.expanded-content');
 
-// --- Functions to toggle modals ---
+// --- Functions ---
 
-// This function opens the projects modal
-function openProjectsModal() {
-    projectsModal.classList.add('visible'); // Add the .visible class
+function openExpandedView(contentId) {
+    // 1. Find the correct template
+    const template = document.querySelector(`#${contentId}-content`);
+    
+    // 2. If a template doesn't exist, do nothing
+    if (!template) {
+        console.error(`Content template for "${contentId}" not found.`);
+        return;
+    }
+
+    // 3. Clone its content and put it into our expanded view
+    const content = template.content.cloneNode(true);
+    expandedContent.innerHTML = ''; // Clear previous content
+    expandedContent.appendChild(content);
+
+    // 4. Add the magic class to the body to trigger the CSS animations
+    body.classList.add('view-expanded');
 }
 
-// This function opens the about modal
-function openAboutModal() {
-    aboutModal.classList.add('visible'); // Add the .visible class
-}
-
-// This function closes ANY modal that is currently visible
-function closeModal() {
-    // Find the currently visible modal and remove its .visible class
-    document.querySelector('.modal.visible').classList.remove('visible');
+function closeExpandedView() {
+    // Remove the class from the body to reverse the animations
+    body.classList.remove('view-expanded');
 }
 
 // --- Event Listeners ---
-projectsBtn.addEventListener('click', openProjectsModal);
-aboutBtn.addEventListener('click', openAboutModal);
 
-// Add the close event to all close buttons
-closeButtons.forEach(button => {
-    button.addEventListener('click', closeModal);
-});
-
-// Optional: Also close the modal if the user clicks on the background overlay
-document.querySelectorAll('.modal').forEach(modal => {
-    modal.addEventListener('click', (event) => {
-        // Only close if the clicked element is the modal background itself
-        if (event.target === modal) {
-            closeModal();
-        }
+// Listen for clicks on ANY of the navigation buttons
+navButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        const contentId = button.dataset.content; // Get the ID from the data-content attribute
+        openExpandedView(contentId);
     });
 });
+
+// Listen for a click on the close button
+closeBtn.addEventListener('click', closeExpandedView);
