@@ -42,3 +42,23 @@ navButtons.forEach(button => {
 
 // Listen for a click on the close button
 closeBtn.addEventListener('click', closeExpandedView);
+
+.social-links {
+    margin-top: 30px; /* Space above the links */
+    display: flex;
+    gap: 30px; /* Space between the links */
+    opacity: 0.8; /* Make them slightly less prominent than the main nav */
+}
+
+.social-links a {
+    color: #f0f0f0;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.social-links a:hover {
+    color: #8a63d2; /* A nice highlight color on hover */
+    transform: scale(1.1);
+}

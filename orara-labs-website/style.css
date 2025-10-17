@@ -158,3 +158,36 @@ body.view-expanded .close-btn { opacity: 1; visibility: visible; }
 .btn-secondary { background-color: transparent; color: #f0f0f0; border: 1px solid #f0f0f0; }
 .btn-secondary:hover { background-color: #f0f0f0; color: #0E0023; }
 .contact-link { color: #8a63d2; font-weight: bold; text-decoration: none; }
+
+.social-links {
+    margin-top: 40px; /* CHANGED: Increased the gap from 30px to 40px */
+    display: flex;
+    gap: 30px;
+}
+
+/* Style the link (the invisible container) */
+.social-links a {
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+/* Style the SVG icon itself */
+.social-links svg {
+    width: 24px;
+    height: 24px;
+    stroke: #f0f0f0; /* The default color of the icon lines */
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+    transition: stroke 0.3s ease;
+}
+
+/* The hover effect */
+.social-links a:hover {
+    transform: scale(1.15);
+}
+
+.social-links a:hover svg {
+    stroke: #ffffff; /* CHANGED: Hover color is now brighter white */
+}
