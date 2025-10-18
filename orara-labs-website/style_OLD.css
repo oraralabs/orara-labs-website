@@ -1,0 +1,33 @@
+/* ================================================= */
+/* CORRECTED: Social Icon Links Style                */
+/* ================================================= */
+
+.social-links {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+.social-links a {
+    display: inline-block;
+    transition: transform 0.3s ease;
+    color: #f0f0f0; /* Set a default link color */
+}
+
+/* Be more specific: target the SVG inside the link */
+.social-links a svg {
+    width: 24px;
+    height: 24px;
+    stroke: currentColor; /* The SVG will inherit the link's color */
+    stroke-width: 2;
+    fill: none;
+    transition: color 0.3s ease; /* Transition the color property of the link */
+}
+
+.social-links a:hover {
+    transform: scale(1.15);
+    color: #ffffff; /* On hover, change the link's color to bright white */
+}
+
+/* We no longer need the 'social-links a:hover svg' rule */
