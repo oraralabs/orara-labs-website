@@ -58,3 +58,15 @@ expandedContent.addEventListener('click', (event) => {
         loadContent('blog');
     }
 });
+
+/* ================================================= */
+/* UPGRADE #1: Logic for Mouse Trail Effect          */
+/* ================================================= */
+
+const cursorGlow = document.querySelector('#cursor-glow');
+
+window.addEventListener('mousemove', (event) => {
+    // Update the position of the glow element to follow the mouse
+    cursorGlow.style.left = event.clientX + 'px';
+    cursorGlow.style.top = event.clientY + 'px';
+});
